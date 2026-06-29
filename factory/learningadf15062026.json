@@ -1,0 +1,15 @@
+{
+	"name": "learningadf15062026",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "westus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0ee89261-28de-4709-b187-587f70548dd3",
+		"tenantId": "97c38074-044d-4636-b6c7-259d85c513d3"
+	}
+}

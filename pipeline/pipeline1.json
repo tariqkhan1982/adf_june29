@@ -1,0 +1,139 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "arr2",
+					"value": {
+						"value": "@variables('arr')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@contains(variables('arr2'),30)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('arr')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Append variable2",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "abc",
+								"value": {
+									"value": "@mul(item(),2)",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "final",
+					"value": {
+						"value": "@variables('abc')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"arr": {
+				"type": "Array",
+				"defaultValue": [
+					10,
+					20,
+					30,
+					40,
+					50,
+					60
+				]
+			},
+			"arr2": {
+				"type": "Array"
+			},
+			"arr_true": {
+				"type": "Array"
+			},
+			"arr_output_3": {
+				"type": "Array"
+			},
+			"o": {
+				"type": "Array"
+			},
+			"x": {
+				"type": "Array"
+			},
+			"final": {
+				"type": "Array"
+			},
+			"abc": {
+				"type": "Array"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-06-27T05:00:06Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
